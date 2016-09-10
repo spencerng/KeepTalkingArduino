@@ -7,6 +7,9 @@
 LiquidCrystal lcd(8,9,4,5,6,7);
 int lcd_key = 0;
 int adc_key_in = 0;
+bool wasPressed = false;
+bool isPressed2 = false;
+int startTime, endTime, timeDiff;
 
 // Used for both button bg & stripes
 String colors[4] = {
@@ -27,36 +30,39 @@ String words[4] = {
 int read_LCD_buttons() {
  adc_key_in = analogRead(0); // read the value from the sensor
  // we add approx 50 to those values and check to see if we are close
- if (adc_key_in > 1000) return btnNONE;
- if (adc_key_in < 850)  return btnSELECT;
+
+ if (adc_key_in < 850)  {
+  wasPressed = true;
+  startTime = millis(); // start time diff
+  return btnSELECT;
+ }
  return btnNONE;
 }
-
-// Check if button is being held
-
 
 void setup() {
   Serial.begin(9600);
   // Replace 0 with an unconnected pin if necessary
   randomSeed(analogRead(0));
+  int randWordIdx = random(4);
+  int randColorIdx = random(4);
+  int randStripe = random(4);
   lcd.begin(16,2);
   lcd.setCursor(4,0);
-  int randWordIdx = random(4);
   lcd.println(words[randWordIdx]);
 }
 
 void loop() {
-  lcd_key = read_LCD_buttons();
-  switch (lcd_key) {
-     case btnSELECT:
-     {
-       lcd.println("SELECT");
-       break;
-     }
-     case btnNONE:
-     {
-       lcd.println("NONE  ");
-       break;
-     }
+  read_LCD_buttons();
+  adc_key_in = analogRead(0);
+  // Check if button is being held
+  while(adc_key_in < 850) { // while button pressed
+   adc_key_in = analogRead(0);
+   isPressed2 = true;
+   if (adc_key_in > 1000) { // released
+    endTime = millis();
+    timeDiff = endTime - startTime;
+    Serial.println(timeDiff);
+    break;
+   }
   }
 }
