@@ -11,8 +11,14 @@ int no_of_wires = 0;
     else if (x==3) strcpy(color_of_wires[i], "white");
     else if (x==4) strcpy(color_of_wires[i], "black");
   }
-  
-int which_wire(int z) //z is the serial number
+
+int lastDigitOfSerial(char serial[6])
+{
+  int x = serial[5];
+  return x;
+}
+
+int which_wire(int lastDigit) 
 {
   int n; //n - wire to cut
   
@@ -42,7 +48,7 @@ int which_wire(int z) //z is the serial number
   //For 4 wires
   if(no_of_wires == 4)
   {
-    int countBlue=0, countRed=0, countYellow=0, lastDigit=0;
+    int countBlue=0, countRed=0, countYellow=0;
     for(int i=0; i<4; i++)
     {
       if(strcmpi(color_of_wires[i], "blue")
@@ -52,8 +58,6 @@ int which_wire(int z) //z is the serial number
       else if(strcmpi(color_of_wires[i], "yellow")
         countYellow++;
     }
-    
-    lastDigit=z%10;
     
     if(countRed>1 && lastDigit%2!=0)
       n=5;
@@ -69,7 +73,7 @@ int which_wire(int z) //z is the serial number
   //For 5 wires
   if(no_of_wires==5)
   {
-    int countBlack=0, countRed=0, countYellow=0, lastDigit=0;
+    int countBlack=0, countRed=0, countYellow=0;
     for(int i=0; i<5; i++)
     {
       if(strcmpi(color_of_wires[i], "black")
@@ -79,8 +83,6 @@ int which_wire(int z) //z is the serial number
       else if(strcmpi(color_of_wires[i], "yellow")
         countYellow++;
     }
-    
-    lastDigit=z%10;
       
     if((strcmpi(color_of_wires[4], "black")==0) && lastDigit%2!=0)
       n=10;
@@ -94,7 +96,7 @@ int which_wire(int z) //z is the serial number
   //For 6 wires
   if(no_of_wires==6)
   {
-     int countWhite=0, countRed=0, countYellow=0, lastDigit=0;
+     int countWhite=0, countRed=0, countYellow=0;
     for(int i=0; i<6; i++)
     {
       if(strcmpi(color_of_wires[i], "white")
@@ -104,8 +106,6 @@ int which_wire(int z) //z is the serial number
       else if(strcmpi(color_of_wires[i], "yellow")
         countYellow++;
     }
-    
-    lastDigit=z%10;
     
     if(countYellow==0 and lastDigit%2!=0)
       n=14;
