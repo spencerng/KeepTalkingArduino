@@ -1,0 +1,44 @@
+int cut_wire()
+{
+  int n;
+  int no_of_wires = 0;
+  randomize();
+  no_of_wires = random(3)+3;
+  char* color_of_wires[no_of_wires][6];
+  for(int i=0; i<no_of_wires; i++)
+  {
+    int x = random(5);
+    if(x==0) strcpy(color_of_wires[i],"red");
+    else if (x==1) strcpy(color_of_wires[i], "blue");
+    else if (x==2) strcpy(color_of_wires[i], "yellow)";
+    else if (x==3) strcpy(color_of_wires[i], "white");
+    else if (x==4) strcpy(color_of_wires[i], "black");
+  }
+  
+  // For 3 wires
+  if (no_of_wires==3)
+  {
+    int f=0;
+    for(int i=0; i<3 && f!=1; i++)
+      if(strcmpi(color_of_wire[i], "red")==0)
+        f=1;
+    if(f==0)
+      {n=1; break;}
+    
+    if(f==1)
+    {
+      if(strcmpi(color_of_wires[2],"white") == 0)
+        n=2;
+      else if(n!=2)
+      { int c=0;
+        for(int i=0; i<2; i++)
+          if(strcmpi(color_of_wire[i], "blue")
+            c++;
+        if(c>1)
+          n=3;
+      }
+      else n=4;
+    }
+  }
+  
+  //For
