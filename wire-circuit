@@ -102,5 +102,25 @@ int cut_wire(int z)
   
   if(no_of_wires==5)
   {
+     int p=0, q=0, r=0, d=0;
+    for(int i=0; i<6; i++)
+    {
+      if(strcmpi(color_of_wires[i], "white")
+        p++;
+      else if(strcmpi(color_of_wires[i], "red")
+        q++;
+      else if(strcmpi(color_of_wires[i], "yellow")
+        r++;
+    }
     
+    d=z%10;
+    
+    if(r==0 and d%2!=0)
+      n=14;
+    else if(r==1 && p>1)
+      n=15;
+    else if(q==0)
+      n=16;
+    else n=17;
+  }
   
