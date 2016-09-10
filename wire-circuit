@@ -1,9 +1,9 @@
-int cut_wire()
+int cut_wire(int z)
 {
   int n;
   int no_of_wires = 0;
   randomize();
-  no_of_wires = random(3)+3;
+  no_of_wires = random(4)+2;
   char* color_of_wires[no_of_wires][6];
   for(int i=0; i<no_of_wires; i++)
   {
@@ -16,7 +16,7 @@ int cut_wire()
   }
   
   // For 3 wires
-  if (no_of_wires==3)
+  if (no_of_wires==2)
   {
     int f=0;
     for(int i=0; i<3 && f!=1; i++)
@@ -41,4 +41,66 @@ int cut_wire()
     }
   }
   
-  //For
+  //For 4 wires
+  if(no_of_wires == 3)
+  {
+    int c=0;
+    for(int i=0; i<4; i++)
+      if(strcmpi(color_of_wire[i], "red")==0)
+        c++;
+    int d = z%10;
+    if(c>1 && d%2!=0)
+      n=5;
+    else if ((strcmpi(color_of_wires[3], "yellow")==0) && c==0)
+      n=6;
+    else if(n!=6)
+    {
+      int v=0, w=0;
+      for(int i=0; i<4; i++)
+        if(strcmpi(color_of_wires[i], "blue")
+          v++;
+      if(v==1)
+        n=7;
+      else if (n!=7)
+      {
+        for(int i=0; i<4; i++)
+          if(strcmpi(color_of_wires[i], "yellow")
+            w++;
+        if(w>1)
+          n=8;
+      }
+      else if(n!=8)
+        n=9;
+    }
+  
+  //For 5 wires
+  if(no_of_wires==4)
+  {
+    int p=0, q=0, r=0, d=0;
+    for(int i=0; i<5; i++)
+    {
+      if(strcmpi(color_of_wires[i], "black")
+        p++;
+      else if(strcmpi(color_of_wires[i], "red")
+        q++;
+      else if(strcmpi(color_of_wires[i], "yellow")
+        r++;
+    }
+    
+    d=z%10;
+      
+    if((strcmpi(color_of_wires[4], "black")==0) && d%2!=0)
+      n=10;
+    else if(q==1 && r>1)
+      n=11;
+    else if(p==0)
+      n=12;
+    else n=13;
+  }
+  
+  //For 6 wires
+  
+  if(no_of_wires==5)
+  {
+    
+  
