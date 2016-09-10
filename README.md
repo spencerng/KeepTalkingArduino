@@ -1,2 +1,8 @@
 # keepTalkingArduino
-A real life Arduino implementation of the game "Keep Talking and Nobody Dies" by Spencer Ng, Pranjal Goel, and Dor Rondel
+A real life Arduino implementation of the game "Keep Talking and Nobody Explodes" by:
+
+  + Spencer Ng
+  + Pranjal Goel
+  + Dor Rondel
+
+for PennApps Fall 2016.
