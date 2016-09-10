@@ -118,7 +118,7 @@ int which_wire(int z) //z is the serial number
   return n;
 }
 
-int cut_wire(int n)
+int cut_wire_no(int n)
 {
   int wireNo;
   if(n==1)
