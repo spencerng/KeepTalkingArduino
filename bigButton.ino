@@ -114,18 +114,18 @@ bool isCorrectMove(String buttonColor, String stripeColor, String buttonText, St
 
 void setup() {
   Serial.begin(9600);
-  /*
-   pinMode(PIN, OUTPUT); // button color
-   pinMode(PIN, OUTPUT); // stripe
-  */
+  pinMode(13, OUTPUT); // button color
+  digitalWrite(13, 250);
+  //pinMode(PIN, OUTPUT); // stripe
   // Replace 0 with an unconnected pin if necessary
   randomSeed(analogRead(0));
   lcd.begin(16,2);
   lcd.setCursor(4,0);
-  lcd.println(words[randWordIdx]);
+  lcd.println("DETONATE    "); //lcd.println(words[randWordIdx]);
 }
 
 void loop() {
+  digitalWrite(13, 255);
   read_LCD_buttons();
   adc_key_in = analogRead(0);
   // Check if button is being held
@@ -144,6 +144,7 @@ void loop() {
 
     bool endGame = isCorrectMove(colors[randColorIdx], colors[randStripe], words[randWordIdx], gameTime, timeDiff);
     if (endGame) {
+      digitalWrite(13, 250);
       //digitalWrite(VICTORY_PIN, HIGH);
       lcd.println("You winnn");
       while(1) {}
