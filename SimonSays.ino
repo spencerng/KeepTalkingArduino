@@ -7,6 +7,7 @@
 #define BLUE 3
 #define YELLOW 4
 
+bool isWaiting = false;
 
 void flashColor(int color){
   
@@ -37,7 +38,7 @@ void flashColor(int color){
 
 }
 
-int numberPassed = 3;
+int numberPassed = 0;
 
 void flashColors(int seq[]){
   int size2 = numberPassed+1;
@@ -50,7 +51,22 @@ void flashColors(int seq[]){
 }
 
 
+int colors[4];
 
+int waitButtonPress(){
+  if(digitalRead(3))
+    return RED;
+  if(digitalRead(6))
+    return GREEN;
+  if(digitalRead(10))
+    return YELLOW;
+  if(digitalRead(13))
+    return BLUE;
+
+    
+   return 0;
+  
+}
 
 void setup() {
   pinMode(11,OUTPUT);
@@ -60,7 +76,7 @@ void setup() {
   pinMode(A5, OUTPUT);
   
   randomSeed(analogRead(0));
-  int colors[4];
+  
   for(int i = 0; i < 4; i++)
     colors[i] = random(4);
   
@@ -74,17 +90,43 @@ void setup() {
   
   
   while(numberPassed<4){
-    int currentSequence[numberPassed+1];
-    for(int i = 0; i<numberPassed+1;i++)
-      currentSequence[i]=colors[i];
-    flashColors(currentSequence);
     
+    for(int i = 0; i < 2; i++){
+      int currentSequence[numberPassed+1];
+      for(int i = 0; i<numberPassed+1;i++)
+        currentSequence[i]=colors[i];
+      flashColors(currentSequence);
+    }
+    
+    for(int i=0;i<numberPassed+1;i++){
+        bool incorrect=false;
+      
+        
+        int buttonPress;
+        do{
+          buttonPress=waitButtonPress();
+        }while(buttonPress==0);
+          
+        if(buttonPress!=colors[i]){
+            //Strike
+            incorrect=true;
+            
+            break;
+        }
+           
+        
+    }
+    
+    delay(100);
   }
   
 
 }
 
 
-void loop() {
 
+
+
+void loop() {
+  
 }

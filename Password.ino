@@ -28,7 +28,7 @@ int read_LCD_buttons()
  if (adc_key_in < 790)  return btnSELECT;  
  return btnNONE;  // when all others fail, return this...
 }
-String wordList[]={"ABOUT","AFTER","AGAIN","BELOW","COULD","EVERY","FIRST","FOUND","GREAT","HOUSE","LARGE","LEARN","NEVER","OTHER","PLACE","PLANT","POINT","RIGHT","SMALL","SOUND","SPELL","STILL","STUDY","THEIR","THERE","THESE","THING","THINK","THREE","WATER","WHERE","WHICH","WOULD","WRITE"};
+String wordList[]={"ABOUT","AFTER","AGAIN","BELOW","COULD","EVERY","FIRST","FOUND","GREAT","HOUSE","LARGE","LEARN","NEVER","OTHER","PLACE","PLANT","POINT","RIGHT","SMALL","SOUND","SPELL","STILL","STUDY","THEIR","THERE","THESE","THING","THINK","THREE","WATER","WHERE","WHICH","WOULD","WORLD","WRITE"};
 String generateWord(){
   
   return wordList[random()%35];
@@ -70,6 +70,8 @@ void setup()
   
   
  }
+ pinMode(A5,OUTPUT);//LSB
+ pinMode(A4,OUTPUT);//MSB
 
  for(int i = 0; i < 5; i++)
   currentSelection[i]=random(7);
@@ -97,6 +99,7 @@ void displayData(){
 
 
  bool isCorrect(){
+  
   String currentWord="";
   
   for(int i = 0; i< 5; i++)
@@ -108,6 +111,20 @@ void displayData(){
   return false;  
  }
 
+ int strikes=0;
+
+ void updateStrikes(){
+    if (strikes==1)
+      digitalWrite(A5,HIGH);
+      if (strikes==2){
+      digitalWrite(A4,HIGH);
+      digitalWrite(A5,LOW);
+      }
+      if(strikes==3){
+        digitalWrite(A5,HIGH);
+      }
+ }
+
   
 void loop()
 {
@@ -116,6 +133,7 @@ void loop()
  
           
  lcd_key = read_LCD_buttons();  // read the buttons
+
 
  
  
@@ -162,14 +180,19 @@ void loop()
       lcd.clear();
      if (isCorrect()){
       
-      lcd.print("YOU WIN");
+      lcd.print("CORRECT");
+      delay(10000000);
       
      }
      else{
+      lcd.clear();
+      lcd.print("INCORRECT");
+        delay(2000);
+        strikes++;
+        updateStrikes();
       
-      lcd.print("YOU LOSE");
      }
-     delay(10000000);
+     
      break;
      
      }
